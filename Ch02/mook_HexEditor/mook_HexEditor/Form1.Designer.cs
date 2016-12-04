@@ -31,41 +31,63 @@
             this.btnFile = new System.Windows.Forms.Button();
             this.pgbView = new System.Windows.Forms.ProgressBar();
             this.HexView = new System.Windows.Forms.RichTextBox();
+            this.stbView = new System.Windows.Forms.StatusBar();
+            this.ofdFile = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // btnFile
             // 
-            this.btnFile.Location = new System.Drawing.Point(12, 12);
+            this.btnFile.Location = new System.Drawing.Point(0, 0);
+            this.btnFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnFile.Name = "btnFile";
-            this.btnFile.Size = new System.Drawing.Size(75, 23);
+            this.btnFile.Size = new System.Drawing.Size(105, 29);
             this.btnFile.TabIndex = 0;
             this.btnFile.Text = "File";
             this.btnFile.UseVisualStyleBackColor = true;
+            this.btnFile.Click += new System.EventHandler(this.btnFile_Click);
             // 
             // pgbView
             // 
-            this.pgbView.Location = new System.Drawing.Point(104, 12);
+            this.pgbView.Location = new System.Drawing.Point(111, 0);
+            this.pgbView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgbView.Name = "pgbView";
-            this.pgbView.Size = new System.Drawing.Size(100, 23);
+            this.pgbView.Size = new System.Drawing.Size(857, 29);
             this.pgbView.TabIndex = 1;
             // 
             // HexView
             // 
-            this.HexView.Location = new System.Drawing.Point(12, 62);
+            this.HexView.Font = new System.Drawing.Font("Courier New", 9F);
+            this.HexView.ForeColor = System.Drawing.Color.Black;
+            this.HexView.Location = new System.Drawing.Point(0, 37);
+            this.HexView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.HexView.Name = "HexView";
-            this.HexView.Size = new System.Drawing.Size(100, 96);
+            this.HexView.Size = new System.Drawing.Size(968, 368);
             this.HexView.TabIndex = 2;
             this.HexView.Text = "";
             // 
+            // stbView
+            // 
+            this.stbView.Location = new System.Drawing.Point(0, 412);
+            this.stbView.Name = "stbView";
+            this.stbView.Size = new System.Drawing.Size(968, 22);
+            this.stbView.TabIndex = 3;
+            this.stbView.Text = "statusBar1";
+            // 
+            // ofdFile
+            // 
+            this.ofdFile.Filter = "텍스트 파일 (*.txt)|*.txt|모든 파일 (*.*)|*.*";
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 535);
+            this.ClientSize = new System.Drawing.Size(968, 434);
+            this.Controls.Add(this.stbView);
             this.Controls.Add(this.HexView);
             this.Controls.Add(this.pgbView);
             this.Controls.Add(this.btnFile);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Hex Viewer";
@@ -78,6 +100,8 @@
         private System.Windows.Forms.Button btnFile;
         private System.Windows.Forms.ProgressBar pgbView;
         private System.Windows.Forms.RichTextBox HexView;
+        private System.Windows.Forms.StatusBar stbView;
+        internal System.Windows.Forms.OpenFileDialog ofdFile;
     }
 }
 
