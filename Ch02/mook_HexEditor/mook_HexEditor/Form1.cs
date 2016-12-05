@@ -128,7 +128,9 @@ namespace mook_HexEditor
 
             if(newrow == 0)
             {
-                numb = padZeros(global);
+                numb = padZeros(global); //padZeros메소드를 이용하여 하나의 offset line값을 구한다
+                biglocal.Append(" " + numb + " ");
+                global += 16;
             }
 
         }
@@ -137,7 +139,19 @@ namespace mook_HexEditor
         private string padZeros(int inInt)
         {
             StringBuilder sblocal = new StringBuilder();
-            string hex = Convert.ToString(inInt, 16);
+            string hex = Convert.ToString(inInt, 16); //매개변수로 Int32값을 받아서 16진수로 변환하여 문자열로 저장
+
+            //offset line값은 16진수로 이루어진 8자리로 구성
+            if (hex.Length < 8)
+            {
+                int ix = 8 - hex.Length; //8자리 중에 값을 넣고 나머지는 0으로 채워넣기
+                for (int i = 0; i < ix; i++)
+                {
+                    sblocal.Append("0");
+                }
+            }
+            sblocal.Append(hex);
+            return sblocal.ToString().ToUpper();
         }
 
         ////HexView(richboxText)와 stbView(StatusView)에 크로스 스레드 피하기 위한 델리게이트
