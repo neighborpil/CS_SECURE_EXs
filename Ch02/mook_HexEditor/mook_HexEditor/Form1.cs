@@ -123,36 +123,56 @@ namespace mook_HexEditor
                 if (i % 1000 == 0)
                     this.pgbView.Value = i; //i를 1000으로 나눈 나머지가 0일때만 progressbar 진행
 
-                //offset Line값을 구하는 구문 한 라인에 16진수의 offset값을 가진다
+                #region Offset Line나타내는 부분 - biglocal에 저장
+                //newrow가 0일때만 offset Line값을 구하는 구문 한 라인에 16진수의 offset값을 가진다
                 if (newrow == 0)
                 {
                     numb = padZeros(global); //padZeros메소드를 이용하여 하나의 offset line값을 구한다
-                    biglocal.Append(" " + numb + " "); //16진수를 하나 적고 앞뒤로 한칸 띄운다
-                    global += 16; //offset 넘버를 16개 뒤로 넘긴다
+                    biglocal.Append(" " + numb + " "); //offset라인 하나(8자리 16진수) 적고 앞뒤로 한칸 띄운다
+                    global += 16; //global의 값이 16씩 증가하므로 offset은 10씩 증가한다
                 }
+                #endregion
 
+                #region Hex값 구하기 - biglocal에 저장
                 hex = convertByteToHexString(MyData[i]); //hex값 구하기
-                biglocal.Append(" " + hex); //3글자 더하기
+                biglocal.Append(" " + hex); //3글자 더하기 
+                #endregion
 
-                //value값을 구하는 작업을 수행, value값은 sblocal개체에 별도로 저장하고  offsetLine값과 hex값과 합친다
-                int g = MyData[i];
-                if (g > 13 || (g > 0 && g < 9)) //byte배열 MyData의 i번째 값이 g일때 그 값이 13보다 크거나 0과 9 사이의 값이면 char로 변환
-                    sblocal.Append((char)MyData[i]);
+                #region Value 값 구하기 - sblocal에 저장, 나중에 biglocal에 병합
+                //value값을 구하는 작업을 수행
+                int g = MyData[i]; //1byte를 읽어들여 정수로 변환한다
+                if (g > 13 || (g > 0 && g < 9)) //변환된 값이 13보다 크거나 0과 9 사이의 값이면 
+                    sblocal.Append((char)MyData[i]); //1 byte를 char로 변환하여 sblocal에 저장
                 else //아니면 점찍기
-                    sblocal.Append('.');
+                    sblocal.Append('.'); 
+                #endregion
 
-                ++newrow; //다음 라인으로
-                if(newrow >= 16)
+                ++newrow; //newrow를 1씩 더하다가 
+                if(newrow >= 16) //16번째가 되면 
                 {
-                    biglocal.Append(" " + sblocal.ToString() + "\n"); //offset과 hex값에 value값 합치기
-                    sblocal = new StringBuilder();
-                    newrow = 0;
+                    biglocal.Append("   " + sblocal.ToString() + "\n"); //biglocal(offset과 hex값)에  3칸 띄우고 sblocal(value값)를 합치고 줄바꿈
+                    sblocal = new StringBuilder(); //value 값 초기화
+                    newrow = 0; //newrow도 초기화
                 }
-
             }
 
-            
+            #region newrow의 값이 16 미만일 경우 공백처리위한 구문
+            if (newrow > 0 && newrow < 16)
+            {
+                for (int i = 0; i < (16 - newrow); ++i)
+                {
+                    biglocal.Append("   "); //hex2자 빈칸 한칸만큼 3칸 띄워쓰기 붙이기
+                }
+                biglocal.Append("   " + sblocal);
+            }
+            biglocal.Append("\n\n");
+            stbView.Text = "Hex 값을 쓰기";
+            this.HexView.AppendText(biglocal.ToString());
+            stbView.Text = "작업 완료";
+            this.pgbView.Value = MyData.Length; 
+            #endregion
 
+            HexAnalysis.Abort(); //스레드 중단
         }
 
         //offset line 값을 구하는 작업 수행
@@ -170,15 +190,16 @@ namespace mook_HexEditor
                     sblocal.Append("0");
                 }
             }
-            sblocal.Append(hex); //실제 hex값 넣기
+            sblocal.Append(hex); //1개의 Offset line값 넣기
             return sblocal.ToString().ToUpper();
         }
 
-        //Hex값을 구하는 작업을 수행
+        //1byte를 읽어들여 2자리의 16진수로 변환한 값을 반환한다
         public string convertByteToHexString(byte inByte)
         {
             StringBuilder sblocal = new StringBuilder();
-            string hex = Convert.ToString(inByte, 16);
+            string hex = Convert.ToString(inByte, 16); //1개의 바이트를 받아서 16진수로 변환 => 문자열로 저장
+            //1byte 8bit로 구성되어 2^8승 즉 0~255의 값을 가진다. 따라서 16진수로는 16 * 16 2자리의 16진수 숫자로 표현된다
             if(hex.Length == 1) //hex넘버가 한자리일경우 앞에 0붙이기
             {
                 sblocal.Append("0");
