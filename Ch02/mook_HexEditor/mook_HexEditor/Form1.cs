@@ -75,11 +75,9 @@ namespace mook_HexEditor
             StringBuilder biglocal = new StringBuilder();
             StringBuilder sblocal = new StringBuilder();
 
-            string message = "\n" + fileName + " " + inSize + " Bytes\n\n";
-            string stbViewText = " " + fileName + " " + inSize + " Bytes";
-
+            string message = "\n" + fileName + " " + (int)inSize + " Bytes\n\n"; //파일 경로와 크기를 HexView에 나타내는 작업
             this.HexView.AppendText(message);
-            stbView.Text = " " + fileName + " " + inSize + " Bytes";
+            stbView.Text = " " + fileName + " " + (int)inSize + " Bytes"; //statusbar에 파일 정보 표시
             this.HexView.Update();
 
             //string msg_stbViewTxt = message + "|" + stbViewText;
@@ -91,7 +89,7 @@ namespace mook_HexEditor
 
             try
             {
-                fs = new FileStream((string)inFile, FileMode.OpenOrCreate, FileAccess.Read);
+                fs = new FileStream((string)inFile, FileMode.OpenOrCreate, FileAccess.Read); //파일 읽어들일 스트림 생성
                 MyData = new byte[fs.Length]; //fs의 길이만큼의 byte배열 생성
             }
             catch
@@ -103,8 +101,8 @@ namespace mook_HexEditor
                 return;
             }
 
-            //stbView.Text = "하드 디스크 파일 분석";
-            fs.Read(MyData, 0, (int)fs.Length); //파일을 읽어들이기
+            stbView.Text = "하드 디스크 파일 분석";
+            fs.Read(MyData, 0, (int)fs.Length); //파일을 읽어들이기(버퍼크기는 MyData만큼, offset은 0, fs의 길이만큼)
             fs.Close();
 
             int newrow = 0; //라인
@@ -123,15 +121,37 @@ namespace mook_HexEditor
             for (int i = 0; i < MyData.Length; i++)
             {
                 if (i % 1000 == 0)
-                    this.pgbView.Value = i;
+                    this.pgbView.Value = i; //i를 1000으로 나눈 나머지가 0일때만 progressbar 진행
+
+                //offset Line값을 구하는 구문 한 라인에 16진수의 offset값을 가진다
+                if (newrow == 0)
+                {
+                    numb = padZeros(global); //padZeros메소드를 이용하여 하나의 offset line값을 구한다
+                    biglocal.Append(" " + numb + " "); //16진수를 하나 적고 앞뒤로 한칸 띄운다
+                    global += 16; //offset 넘버를 16개 뒤로 넘긴다
+                }
+
+                hex = convertByteToHexString(MyData[i]); //hex값 구하기
+                biglocal.Append(" " + hex); //3글자 더하기
+
+                //value값을 구하는 작업을 수행, value값은 sblocal개체에 별도로 저장하고  offsetLine값과 hex값과 합친다
+                int g = MyData[i];
+                if (g > 13 || (g > 0 && g < 9)) //byte배열 MyData의 i번째 값이 g일때 그 값이 13보다 크거나 0과 9 사이의 값이면 char로 변환
+                    sblocal.Append((char)MyData[i]);
+                else //아니면 점찍기
+                    sblocal.Append('.');
+
+                ++newrow; //다음 라인으로
+                if(newrow >= 16)
+                {
+                    biglocal.Append(" " + sblocal.ToString() + "\n"); //offset과 hex값에 value값 합치기
+                    sblocal = new StringBuilder();
+                    newrow = 0;
+                }
+
             }
 
-            if(newrow == 0)
-            {
-                numb = padZeros(global); //padZeros메소드를 이용하여 하나의 offset line값을 구한다
-                biglocal.Append(" " + numb + " ");
-                global += 16;
-            }
+            
 
         }
 
@@ -144,15 +164,32 @@ namespace mook_HexEditor
             //offset line값은 16진수로 이루어진 8자리로 구성
             if (hex.Length < 8)
             {
-                int ix = 8 - hex.Length; //8자리 중에 값을 넣고 나머지는 0으로 채워넣기
+                int ix = 8 - hex.Length; //8자리 중에 값을 넣을 곳 앞부분에 0으로 채워넣기
                 for (int i = 0; i < ix; i++)
                 {
                     sblocal.Append("0");
                 }
             }
-            sblocal.Append(hex);
+            sblocal.Append(hex); //실제 hex값 넣기
             return sblocal.ToString().ToUpper();
         }
+
+        //Hex값을 구하는 작업을 수행
+        public string convertByteToHexString(byte inByte)
+        {
+            StringBuilder sblocal = new StringBuilder();
+            string hex = Convert.ToString(inByte, 16);
+            if(hex.Length == 1) //hex넘버가 한자리일경우 앞에 0붙이기
+            {
+                sblocal.Append("0");
+                sblocal.Append(hex);
+            }
+            else
+                sblocal.Append(hex);
+
+            return sblocal.ToString().ToUpper();
+        }
+
 
         ////HexView(richboxText)와 stbView(StatusView)에 크로스 스레드 피하기 위한 델리게이트
         //public delegate void HexViewAppTxtDelegate(string message);
