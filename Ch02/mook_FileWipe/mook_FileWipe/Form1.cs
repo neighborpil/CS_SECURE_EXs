@@ -18,10 +18,17 @@ using System.Windows.Forms;
                   해당 기법을 반복 또는 조합하거나 공개된 방법 이외에 자신만의 방법도 사용
 
 */
+/*
+btnPath_Click(object sender, EventArgs e) : [...]버튼을 눌렀을 때 발생하는 이벤트 핸들러, [열기] 대화상자를 호출하고 파일의 경로 설정
+btnWipe_Click(object sender, EventArgs e) : [Wipe]버튼을 눌렀을 때 발생하는 이벤트 핸들러, 파일을 삭제
+cbWipe_SelectIndexChanged(object sender, EventArgs e) : cbWipe 컨트롤의 Items 선택시 발생하는 이벤트 핸들러, 삭제 알고리즘 선택
+*/
 namespace mook_FileWipe
 {
     public partial class Form1 : Form
     {
+        FileDelete fd = null; //파일을 삭제하는데 사용되는 메소드와 속성을 지원하는 개체
+
         public Form1()
         {
             InitializeComponent();
