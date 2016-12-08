@@ -115,6 +115,7 @@
             this.btnPath.TabIndex = 4;
             this.btnPath.Text = "...";
             this.btnPath.UseVisualStyleBackColor = true;
+            this.btnPath.Click += new System.EventHandler(this.btnPath_Click);
             // 
             // ofdFile
             // 
@@ -130,6 +131,7 @@
             this.btnWipe.TabIndex = 4;
             this.btnWipe.Text = "Wipe";
             this.btnWipe.UseVisualStyleBackColor = true;
+            this.btnWipe.Click += new System.EventHandler(this.btnWipe_Click);
             // 
             // Form1
             // 

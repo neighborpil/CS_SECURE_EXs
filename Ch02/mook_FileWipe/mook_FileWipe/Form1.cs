@@ -33,5 +33,23 @@ namespace mook_FileWipe
         {
             InitializeComponent();
         }
+
+        //[...]버튼 클릭, openFileDialog를 호출하고 파일의 경로 설정
+        private void btnPath_Click(object sender, EventArgs e)
+        {
+            if(ofdFile.ShowDialog() == DialogResult.OK)
+            {
+                this.txtPath.Text = ofdFile.FileName;
+            }
+        }
+
+        //[Wipe] 버튼 : FileDelete 클래스의 인스턴스를 이용하여 선택된 파일을 삭제
+        private void btnWipe_Click(object sender, EventArgs e)
+        {
+            if(this.cbWipe.Text == "")
+            {
+
+            }
+        }
     }
 }
