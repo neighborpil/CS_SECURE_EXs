@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 /*
-멍미! 실행안돼!!ㅋㅋㅋㅋㅋ
+집컴에 백신 깔려 있어서 안됐는데 딴데서 백신 없는데서 하니까 된다 ㅋ
 
 Form1_Load(object sender, EventArgs e) : USB를 감지하는 스레드를 실행
 Form1_Closing(object sender, FormClosingEventArgs e) : 추가 실행된 스레드를 강제 종료
