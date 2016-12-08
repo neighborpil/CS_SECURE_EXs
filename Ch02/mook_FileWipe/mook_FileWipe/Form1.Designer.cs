@@ -99,6 +99,7 @@
             this.cbWipe.Name = "cbWipe";
             this.cbWipe.Size = new System.Drawing.Size(209, 20);
             this.cbWipe.TabIndex = 2;
+            this.cbWipe.SelectedIndexChanged += new System.EventHandler(this.cbWipe_SelectedIndexChanged);
             // 
             // txtPath
             // 

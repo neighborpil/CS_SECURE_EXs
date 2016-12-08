@@ -48,7 +48,66 @@ namespace mook_FileWipe
         {
             if(this.cbWipe.Text == "")
             {
+                MessageBox.Show("Wipe 방법을 선택해주세요", "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.cbWipe.Focus();
+                return;
+            }
+            else if(this.txtPath.Text == "")
+            {
+                MessageBox.Show("삭제할 파일을 선택하세요", "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.btnPath.Focus();
+                return;
+            }
 
+            //British HMG IS5(Base Line)
+            //British HMG IS5(Enhanced)
+            //British HMG IS5 (Base Line)
+            //British HMG IS5(Enhanced)
+
+            switch (this.cbWipe.Text)
+            {
+
+                case "British HMG IS5 (Base Line)":
+                    fd = new FileDelete(this.txtPath.Text);
+                    fd.runPer += new FileDelete.ProcessEventHandler(WipeStatus); //FileDelete에서 델리게이트를 만들어 놓고 거기에 Form1의 메소드를 집어 넣는다
+                    fd.British_HMG_IS5_BaseLine(this.txtPath.Text);              //그럼 FileDelete가 종료될 때 Form1에 값을 반환한다!!!!!!!!!!!!!드뎌 찾았다!!!
+                    break;
+                case "British HMG IS5 (Enhanced)":
+                    fd = new FileDelete(this.txtPath.Text);
+                    fd.runPer += new FileDelete.ProcessEventHandler(WipeStatus);
+                    fd.British_HMG_IS5_Enhanced(this.txtPath.Text);
+                    break;
+            }
+        }
+
+        //삭제 진행률을 나타내는 이벤트 처리기로 lblPer컨트롤에 파일을 삭제하는 진행상태를 나타내는 작업
+        private void WipeStatus(int Current)
+        {
+            switch (Current)
+            {
+                case 0:
+                    this.lblPer.Text = "진행률 : " + Current + "%";
+                    break;
+                default:
+                    this.lblPer.Text = "진행률 : " + Current + "%";
+                    if(Current == 100)
+                        this.txtPath.Text = "";
+                    break;
+            }
+            Application.DoEvents(); //현재 메세지 큐에 있는 모든 Windows 메세지를 처리,
+                                    //이벤트가 발생할 때 델리게이트에 설정된 이벤트 처리기가 호출되어 진행률이 올라가는데 자연스러운 숫자 변경을 위한 구문
+        }
+
+        private void cbWipe_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (this.cbWipe.Text)
+            {
+                case "British HMG IS5 (Base Line)":
+                    this.lblTotal.Text = "Level : 1";
+                    break;
+                case "British HMG IS5 (Enhanced)":
+                    this.lblTotal.Text = "Level : 3";
+                    break;
             }
         }
     }
