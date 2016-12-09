@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shell32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,6 +47,43 @@ namespace mook_FileRestore
         public Form1()
         {
             InitializeComponent();
+        }
+
+        //폼로드 : Load_RecycleBinFile()메소드 호출, 휴지통에 담겨 있는 파일의 리스트를 출력
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Load_RecycleBinFile();
+        }
+
+        /*
+        Shell.NameSpace() 메서드는 지정된 상수 또는 문자열 경로 하위의 폴더 및 파일 정보를 가져오기 위한
+        Folder 인터페이스와 FolderItem 인터페이스를 제공
+
+        Shell.NameSpace(0) : 바탕화면 폴더 및 파일
+        Shell.NameSpace(4) : installed printers
+        Shell.NameSpace(5) : c:\Users\username\Documents
+        Shell.NameSpace(6) : c:\Documents and Settings\username\Favorites
+        Shell.NameSpace(8) : c:\Users\username\AppData\Roaming\Microsoft\Windows\Recent
+        Shell.NameSpace(10) : 휴지통
+        */
+
+
+        private void Load_RecycleBinFile()
+        {
+            this.lvRcvFile.Items.Clear();
+            Shell Shl = new Shell(); //Shell32.dll 라이브러리 하위에 존재하는 Shell 클래스의 개체를 생성
+                                     //Folder 및 FolderItem 인터페이스를 사용 할 수 있다
+            Folder Recycler = Shl.NameSpace(10); //휴지통의 폴더
+
+            #region for문을 이용하여 Recyle 개체가 포함하고 있는 Item의 수만큼 반복하여 개체에 포함된 점보를 listview에 표시
+
+            for (int i = 0; i < Recycler.Items().Count; i++)
+            {
+                FolderItem FI = Recycler.Items().Item(i); //Recycler폴더 내의 아이템들을 FolderItem객체에 저장
+                string FileName = Recycler.GetDetailsOf(FI, 0);
+            }
+
+            #endregion
         }
     }
 }
