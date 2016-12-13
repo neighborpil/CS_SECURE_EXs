@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -80,10 +81,72 @@ namespace mook_FileRestore
             for (int i = 0; i < Recycler.Items().Count; i++)
             {
                 FolderItem FI = Recycler.Items().Item(i); //Recycler폴더 내의 아이템들을 FolderItem객체에 저장
-                string FileName = Recycler.GetDetailsOf(FI, 0);
+                string FileName = Recycler.GetDetailsOf(FI, 0); //FI 개체에 첫번째 저장된 정보, 즉 폴더 및 파일의 이름 얻는 작업
+                if (Path.GetExtension(FileName) == "") //Path.GetExtension() : 지정된 경로 문자열에서 확장자가 없다면
+                    FileName += Path.GetExtension(FI.Path); //파일명에 확장자 합치기
+                string FilePath = Recycler.GetDetailsOf(FI, 1); //FI 개체에 두번째 저장된 정보, 삭제전 원래 폴더 및 파일의 이름 얻는 작업
+                string FileDelDate = Recycler.GetDetailsOf(FI, 2); //FI 개체에 세번째 저장된 정보, 삭제전 원래 폴더 및 파일의 삭제 시간
+                var lvt = new ListViewItem(new string[] { FileName, FilePath, FileDelDate });
+                this.lvRcvFile.Items.Add(lvt);
             }
 
             #endregion
+        }
+
+        //[새로고침] :휴지통에 담겨 있는 삭제된 폴더 및 파일 출력
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            Load_RecycleBinFile();
+        }
+
+        //[휴지통 비우기] : 휴지통에 담겨 있는 폴더 및 파일 삭제
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SHEmptyRecycleBin(IntPtr.Zero, null, RecycleFlags.SHERB_NOCONFIRMATION);
+                MessageBox.Show(this, "휴지통을 비웠습니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(this, "휴지통을 비우는 작업에 실패했습니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            finally
+            {
+                Load_RecycleBinFile();
+            }
+        }
+
+        //[복원] : FileRestor() 메서드 호출
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            if(this.lvRcvFile.SelectedItems.Count != 0)
+            {
+                FileRestor()
+            }
+        }
+
+        //매개변수로 전달 받는 파일을 삭제되기 전으로 복원하기 위한 사전 작업
+        private bool FileRestore(string Item)
+        {
+            Shell shl = new Shell();
+            Folder Recycler = shl.NameSpace(10);
+            for (int i = 0; i < Recycler.Items().Count; i++)
+            {
+                FolderItem FI = Recycler.Items().Item(i);
+                string FileName = Recycler.GetDetailsOf(FI, 0);
+                if (Path.GetExtension(FileName) == "")
+                    FileName += Path.GetExtension(FI.Path);
+                string FilePath = Recycler.GetDetailsOf(FI, 1);
+                
+                if(Item == Path.Combine(FilePath, FileName))
+                {
+                    DoVerb(FI, "복원(&E");
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -48,7 +48,7 @@
             this.lvRcvFile.Location = new System.Drawing.Point(14, 15);
             this.lvRcvFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lvRcvFile.Name = "lvRcvFile";
-            this.lvRcvFile.Size = new System.Drawing.Size(650, 524);
+            this.lvRcvFile.Size = new System.Drawing.Size(1289, 524);
             this.lvRcvFile.TabIndex = 0;
             this.lvRcvFile.UseCompatibleStateImageBehavior = false;
             this.lvRcvFile.View = System.Windows.Forms.View.Details;
@@ -56,12 +56,12 @@
             // chName
             // 
             this.chName.Text = "이름";
-            this.chName.Width = 150;
+            this.chName.Width = 470;
             // 
             // chPath
             // 
             this.chPath.Text = "원래 위치";
-            this.chPath.Width = 260;
+            this.chPath.Width = 483;
             // 
             // chDel
             // 
@@ -70,39 +70,42 @@
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(317, 549);
+            this.btnDel.Location = new System.Drawing.Point(956, 547);
             this.btnDel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(107, 29);
+            this.btnDel.Size = new System.Drawing.Size(119, 29);
             this.btnDel.TabIndex = 1;
             this.btnDel.Text = "휴지통 비우기";
             this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnRestore
             // 
-            this.btnRestore.Location = new System.Drawing.Point(431, 549);
+            this.btnRestore.Location = new System.Drawing.Point(1082, 547);
             this.btnRestore.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(107, 29);
             this.btnRestore.TabIndex = 1;
             this.btnRestore.Text = "복원";
             this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(545, 549);
+            this.btnRefresh.Location = new System.Drawing.Point(1196, 547);
             this.btnRefresh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(107, 29);
             this.btnRefresh.TabIndex = 1;
             this.btnRefresh.Text = "새로고침";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(678, 586);
+            this.ClientSize = new System.Drawing.Size(1315, 586);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnRestore);
             this.Controls.Add(this.btnDel);
