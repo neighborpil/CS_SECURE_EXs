@@ -123,7 +123,11 @@ namespace mook_FileRestore
         {
             if(this.lvRcvFile.SelectedItems.Count != 0)
             {
-                FileRestor()
+                FileRestore(this.lvRcvFile.SelectedItems[0].SubItems[1].Text + @"\" + this.lvRcvFile.SelectedItems[0].SubItems[0].Text);
+            }
+            else
+            {
+                MessageBox.Show("복원할 파일을 선택하세요", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -142,7 +146,29 @@ namespace mook_FileRestore
                 
                 if(Item == Path.Combine(FilePath, FileName))
                 {
-                    DoVerb(FI, "복원(&E");
+                    DoVerb(FI, "복원(&E)"); //삭제된 파일 및 폴더 정보의 FolderItem 개체와 실행 명령 인자값을 대입하여 호출
+                    return true;
+                }
+            }
+            return false;
+        }
+        /*
+        #명령 인자값
+         - 복원(&E)
+         - 잘라내기(&T)
+         - 삭제(&D)
+         - 속성(&R)
+        */
+
+        //매개변수로 전달받은 파일 및 폴더를 복원
+        private bool DoVerb(FolderItem Item, string Verb)
+        {
+            foreach(FolderItemVerb FIVerb in Item.Verbs())
+            {
+                if (FIVerb.Name.ToUpper().Contains(Verb.ToUpper()))
+                {
+                    FIVerb.DoIt(); //지정된 경로, 즉 삭제되기 전의 경로로 복원하는 작업
+                    Load_RecycleBinFile();
                     return true;
                 }
             }
