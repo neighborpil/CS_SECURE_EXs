@@ -20,15 +20,21 @@ using System.Windows.Forms;
 
 1. 웹서버 구축
  a) 제어판에서 [Windows 기능 켜기/끄기] 클릭
- b) 인터넷 정보 서비스 - World Wide Web 서비스 클릭
- c) 응용 프로그램 개발 기능 클릭
- d) .NET 확장성 3.5 체크
- e) .NET 확장성 4.6 체크
- f) ASP 체크
- g) ASP.NET 3.5 체크
- h) ASP.NET 4.6 체크
- i) ISAPI 필터 체크
- j) ISAPI 확장 체크
+ b) 인터넷 정보 서비스에 체크
+ ***
+ //[인터넷 정보 서비스] - [World Wide web]
+ - 인터넷 정보 서비스에 +를 눌러 혹시 아래의 항목이 체크되어 있지 않다면 체크한다.
+ - 응용 프로그램 개발 기능 클릭
+ - .NET 확장성 3.5 체크
+ - .NET 확장성 4.6 체크
+ - ASP 체크
+ - ASP.NET 3.5 체크
+ - ASP.NET 4.6 체크
+ - ISAPI 필터 체크
+ - ISAPI 확장 체크
+
+ //[인터넷 정보 서비스] - [웹 관리 도구]
+ ***
 
 
 */
