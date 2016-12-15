@@ -8,6 +8,9 @@ C sharp security examples that are made of Jo, HoMook
  * HexEditor : read file and show it as a hex data
  * USBFileCopy : if someone insert USB driver, then copy files in use driver to secret folder  
  
-## Chapter 03  
+## Chapter 03  
 
+ * UTF-8 변환
+ * 파일 해시값 알아보기 
+ 
 ## Chapter 04
