@@ -137,6 +137,60 @@ namespace mook_cdkeyUse
 
             int add = DateTime.Now.Year;
             int z;
+
+            int con0 = 0;
+            int con1 = 0;
+            int con2 = 0;
+            int con3 = 0;
+            int con4 = 0;
+
+            for (int i = 0; i < key.Length; i++)
+            {
+                z = (i + 10) * add;
+                num[i] = (int)key[i];
+                sbN.Append(K[(z ^ num[i]) % 36]);
+
+                if(((i + 1) % 5 == 0))
+                {
+                    sbN.Append("-");
+                }
+
+                switch(i % 5)
+                {
+                    case 0:
+                        {
+                            con0 += ((z ^ num[i]) % 36);
+                            break;
+                        }
+                    case 1:
+                        {
+                            con1 += ((z ^ num[i]) % 36);
+                            break;
+                        }
+                    case 2:
+                        {
+                            con2 += ((z ^ num[i]) % 36);
+                            break;
+                        }
+                    case 3:
+                        {
+                            con3 += ((z ^ num[i]) % 36);
+                            break;
+                        }
+                    case 4:
+                        {
+                            con4 += ((z ^ num[i]) % 36);
+                            break;
+                        }
+                }
+            }
+
+            sbN.Append(K[con0 % 36]);
+            sbN.Append(K[con1 % 36]);
+            sbN.Append(K[con2 % 36]);
+            sbN.Append(K[con3 % 36]);
+            sbN.Append(K[con4 % 36]);
+            _CDKey = sbN.ToString();
         }
         
         //MD5 Hash 구하기
