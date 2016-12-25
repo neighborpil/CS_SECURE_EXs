@@ -42,5 +42,17 @@ namespace mook_UTF8Base64
         {
             this.txtDecode.Text = cv.UTF8Decode(this.txtDecode.Text);
         }
+
+        //문자열을 Base64로 인코딩
+        private void btnBaseEn_Click(object sender, EventArgs e)
+        {
+            this.txtDecode.Text = cv.Base64Encode(this.txtEncode.Text);
+        }
+
+        //Base64형식으로 인코딩된 문자열을 디코딩
+        private void btnBaseDe_Click(object sender, EventArgs e)
+        {
+            this.txtDecode.Text = cv.Base64Decode(txtDecode.Text);
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace mook_UTF8Base64
             }
             return sTemp2; //변환된 문자열을 반환
         }
+
         //UTF-8로 변환된 문자열을 본래의 문자열로 디코딩
         public string UTF8Decode(string sParam)
         {
@@ -96,7 +97,7 @@ namespace mook_UTF8Base64
             }
 
             #region 16진수 문자열을 분리하여 두 자리씩 hex에 저장하여 HexToByte() 메서드를 호출하여 16진수를 10진수 값으로 변환하여 byte배열에 저장
-            int byteLength = newString.Length / 2; //newString을 반으로 잘라
+            int byteLength = newString.Length / 2; //newString을 반으로 잘라 
             byte[] bytes = new byte[byteLength]; //반으로 자른 길이만큼 byte 배열을 만들고
             string hex;
             int j = 0;
@@ -130,11 +131,52 @@ namespace mook_UTF8Base64
         private static byte HexToByte(string hex)
         {
             if (hex.Length > 2 || hex.Length <= 0)
-                throw new ArgumentException("hex mus be 1 or 2 characters in length");
+                throw new ArgumentException("hex must be 1 or 2 characters in length");
             byte newByte = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber); //16진수를 10진수로 변환하여 byte변수에 저장
             return newByte;
         }
 
         //문자열을 파라미터로 전달받아 Base64형식으로 인코딩
+        public string Base64Encode(string sParam)
+        {
+            sTemp2 = string.Empty;
+            if(sParam == string.Empty || sParam == null)
+            {
+                sTemp2 = "입력된 문자가 없습니다";
+                return sTemp2;
+            }
+            try
+            {
+                byte[] enbytes = Encoding.Default.GetBytes(sParam); //GetBytes() 메소드로 지정된 문자열을 바이트 배열로 인코딩
+                sTemp2 = Convert.ToBase64String(enbytes); //바이트 배열을 base64 숫자로 인코딩하여 해당하는 문자열 표현으로 변환
+            }
+            catch(Exception ex)
+            {
+                sTemp2 = "오류발생 : " + ex.Message.ToString();
+            }
+            return sTemp2;
+        }
+
+        //base64로 변환된 문자열을 본래의 문자열로 디코딩
+        public string Base64Decode(string sParam)
+        {
+            sTemp2 = string.Empty;
+            if(sParam == string.Empty || sParam == null)
+            {
+                sTemp2 = "입력된 문자열이 없습니다";
+                return sTemp2;
+            }
+
+            try
+            {
+                byte[] debytes = Convert.FromBase64String(sParam); //base64문자열을 byte배열로 변환
+                sTemp2 = Encoding.Default.GetString(debytes); //byte배열을 본래의 문자열로 변환
+            }
+            catch(Exception ex)
+            {
+                sTemp2 = "오류발생 : " + ex.Message.ToString();
+            }
+            return sTemp2;
+        }
     }
 }

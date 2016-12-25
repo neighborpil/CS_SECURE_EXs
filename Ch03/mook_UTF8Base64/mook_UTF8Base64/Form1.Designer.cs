@@ -38,9 +38,10 @@
             // 
             // btnUTFEn
             // 
-            this.btnUTFEn.Location = new System.Drawing.Point(13, 12);
+            this.btnUTFEn.Location = new System.Drawing.Point(15, 15);
+            this.btnUTFEn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUTFEn.Name = "btnUTFEn";
-            this.btnUTFEn.Size = new System.Drawing.Size(108, 23);
+            this.btnUTFEn.Size = new System.Drawing.Size(123, 29);
             this.btnUTFEn.TabIndex = 0;
             this.btnUTFEn.Text = "UTF8 Encode";
             this.btnUTFEn.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@
             // 
             // btnUTFDe
             // 
-            this.btnUTFDe.Location = new System.Drawing.Point(13, 41);
+            this.btnUTFDe.Location = new System.Drawing.Point(15, 51);
+            this.btnUTFDe.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUTFDe.Name = "btnUTFDe";
-            this.btnUTFDe.Size = new System.Drawing.Size(108, 23);
+            this.btnUTFDe.Size = new System.Drawing.Size(123, 29);
             this.btnUTFDe.TabIndex = 0;
             this.btnUTFDe.Text = "UTF8 Decode";
             this.btnUTFDe.UseVisualStyleBackColor = true;
@@ -58,43 +60,49 @@
             // 
             // btnBaseEn
             // 
-            this.btnBaseEn.Location = new System.Drawing.Point(13, 119);
+            this.btnBaseEn.Location = new System.Drawing.Point(15, 149);
+            this.btnBaseEn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBaseEn.Name = "btnBaseEn";
-            this.btnBaseEn.Size = new System.Drawing.Size(108, 23);
+            this.btnBaseEn.Size = new System.Drawing.Size(123, 29);
             this.btnBaseEn.TabIndex = 0;
             this.btnBaseEn.Text = "Base64 Encode";
             this.btnBaseEn.UseVisualStyleBackColor = true;
+            this.btnBaseEn.Click += new System.EventHandler(this.btnBaseEn_Click);
             // 
             // btnBaseDe
             // 
-            this.btnBaseDe.Location = new System.Drawing.Point(13, 148);
+            this.btnBaseDe.Location = new System.Drawing.Point(15, 185);
+            this.btnBaseDe.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBaseDe.Name = "btnBaseDe";
-            this.btnBaseDe.Size = new System.Drawing.Size(108, 23);
+            this.btnBaseDe.Size = new System.Drawing.Size(123, 29);
             this.btnBaseDe.TabIndex = 0;
             this.btnBaseDe.Text = "Base64 Decode";
             this.btnBaseDe.UseVisualStyleBackColor = true;
+            this.btnBaseDe.Click += new System.EventHandler(this.btnBaseDe_Click);
             // 
             // txtEncode
             // 
-            this.txtEncode.Location = new System.Drawing.Point(127, 12);
+            this.txtEncode.Location = new System.Drawing.Point(145, 15);
+            this.txtEncode.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtEncode.Multiline = true;
             this.txtEncode.Name = "txtEncode";
-            this.txtEncode.Size = new System.Drawing.Size(354, 99);
+            this.txtEncode.Size = new System.Drawing.Size(404, 123);
             this.txtEncode.TabIndex = 1;
             // 
             // txtDecode
             // 
-            this.txtDecode.Location = new System.Drawing.Point(127, 119);
+            this.txtDecode.Location = new System.Drawing.Point(145, 149);
+            this.txtDecode.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDecode.Multiline = true;
             this.txtDecode.Name = "txtDecode";
-            this.txtDecode.Size = new System.Drawing.Size(354, 99);
+            this.txtDecode.Size = new System.Drawing.Size(404, 123);
             this.txtDecode.TabIndex = 1;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 226);
+            this.ClientSize = new System.Drawing.Size(569, 282);
             this.Controls.Add(this.txtDecode);
             this.Controls.Add(this.txtEncode);
             this.Controls.Add(this.btnBaseDe);
@@ -102,6 +110,7 @@
             this.Controls.Add(this.btnUTFDe);
             this.Controls.Add(this.btnUTFEn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "UTF / Base64 EnDecoder";
