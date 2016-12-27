@@ -70,6 +70,7 @@
             this.btnConvert.TabIndex = 3;
             this.btnConvert.Text = "Decrypt";
             this.btnConvert.UseVisualStyleBackColor = true;
+            this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
             // btnSave
             // 

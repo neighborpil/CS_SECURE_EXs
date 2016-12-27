@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -26,7 +28,7 @@ namespace mook_Rijndael
     {
         //private string FilePath = null;
         byte[] privateKey = null; //16, 24, 32중
-        byte[] privateVI = null; //16자리
+        byte[] privateIV = null; //16자리
 
         public Form1()
         {
@@ -38,7 +40,65 @@ namespace mook_Rijndael
         {
             using(OpenFileDialog ofd = new OpenFileDialog() { Multiselect = false, ValidateNames = true, Filter = "JPEG|*.jpg" })
             {
-                if
+                if(ofd.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = ofd.FileName;
+                    StreamReader sr = new StreamReader(filePath, Encoding.Default);
+                    this.txtDiary.Text = sr.ReadToEnd();
+                    sr.Close();
+                }
+            }
+        }
+
+        //[Decrypt], txtDiary 컨트롤에 나타난 암호화된 문자열을 복호화
+        private void btnConvert_Click(object sender, EventArgs e)
+        {
+            if(this.txtPrivateKey.Text == "" || this.txtPrivateKey.Text.Length < 8)
+            {
+                MessageBox.Show("PrivateKey 입력이 올바르지 않습니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.txtPrivateKey.Text = "";
+                this.txtPrivateKey.Focus();
+                return;
+            }
+
+            //비밀키 생성 구문, 비밀키는 192비트 32개의 문자로 이뤄진다, 여기서는 txtPrivate 컨트롤에 입력된 8자리 문자를 4번 반복한다
+            string strkey = this.txtPrivateKey.Text + this.txtPrivateKey.Text + this.txtPrivateKey.Text + this.txtPrivateKey.Text;
+            privateKey = Encoding.ASCII.GetBytes(strkey); //byte배열로 변환
+            //초기화 벡터는 
+            byte[] arrIv = Encoding.ASCII.GetBytes(this.txtPrivateKey.Text + this.txtPrivateKey.Text); 
+            Array.Reverse(arrIv);
+            privateIV = arrIv;
+
+            try
+            {
+                MemoryStream msDecrypt = null;
+                CryptoStream csDecrypt = null;
+                StreamReader srDecrypt = null;
+                RijndaelManaged aesAlg = null;
+                string plaintext = null;
+
+                aesAlg = new RijndaelManaged();
+                aesAlg.Key = privateKey;
+                aesAlg.IV = privateIV;
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                byte[] cipherText = Convert.FromBase64String(this.txtDiary.Text);
+                msDecrypt = new MemoryStream(cipherText);
+                csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+                srDecrypt = new StreamReader(csDecrypt);
+                plaintext = srDecrypt.ReadToEnd();
+
+                if (srDecrypt != null) srDecrypt.Close();
+                if (csDecrypt != null) csDecrypt.Close();
+                if (msDecrypt != null) msDecrypt.Close();
+                if (aesAlg != null) aesAlg.Clear();
+
+                this.txtDiary.Text = plaintext;
+            }
+            catch
+            {
+                MessageBox.Show("복호화에 장애가 발생하였습니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
     }
