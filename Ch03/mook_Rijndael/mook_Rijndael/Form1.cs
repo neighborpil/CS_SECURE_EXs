@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 /*
 [Rijndael 암&복호화]
+ - 대칭키 알고리즘
  - AES 후보 기술
  - 3가지 키 크기(128bit, 192bit, 256bit) 지원
  - 새로운 대칭 블록 암호
@@ -38,7 +39,7 @@ namespace mook_Rijndael
         //[열기] 대화상자를 열고 파일을 선택하여 일기 내용을 txtDiary 컨트롤에 출력
         private void btnFile_Click(object sender, EventArgs e)
         {
-            using(OpenFileDialog ofd = new OpenFileDialog() { Multiselect = false, ValidateNames = true, Filter = "JPEG|*.jpg" })
+            using(OpenFileDialog ofd = new OpenFileDialog() { Multiselect = false, ValidateNames = true, Filter = "Text|*.txt" })
             {
                 if(ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -64,7 +65,7 @@ namespace mook_Rijndael
             //비밀키 생성 구문, 비밀키는 192비트 32개의 문자로 이뤄진다, 여기서는 txtPrivate 컨트롤에 입력된 8자리 문자를 4번 반복한다
             string strkey = this.txtPrivateKey.Text + this.txtPrivateKey.Text + this.txtPrivateKey.Text + this.txtPrivateKey.Text;
             privateKey = Encoding.ASCII.GetBytes(strkey); //byte배열로 변환
-            //초기화 벡터는 
+            //초기화 벡터는 비밀키가 192비트일때는 16개의 문자 96비트이다, txtPrivateKey를 2번하여 byte배열로 만들고 reverse한다
             byte[] arrIv = Encoding.ASCII.GetBytes(this.txtPrivateKey.Text + this.txtPrivateKey.Text); 
             Array.Reverse(arrIv);
             privateIV = arrIv;
@@ -78,15 +79,15 @@ namespace mook_Rijndael
                 string plaintext = null;
 
                 aesAlg = new RijndaelManaged();
-                aesAlg.Key = privateKey;
+                aesAlg.Key = privateKey; //Rijndael 암&복호화 알고리즘의 대칭 알고리즘에 대한 비밀키 설정
                 aesAlg.IV = privateIV;
 
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-                byte[] cipherText = Convert.FromBase64String(this.txtDiary.Text);
-                msDecrypt = new MemoryStream(cipherText);
-                csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
-                srDecrypt = new StreamReader(csDecrypt);
-                plaintext = srDecrypt.ReadToEnd();
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV); //CryptoStream의 두번째 매개변수인 스트림에 대해 수행될 암호화 변형값
+                byte[] cipherText = Convert.FromBase64String(this.txtDiary.Text);//text를 byte배열로 변환
+                msDecrypt = new MemoryStream(cipherText); //byte배열을 memorystream에 넣고
+                csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read); //그것을 다시 CryptoStream에 ICryptoTransform 객체와 함께 넣고
+                srDecrypt = new StreamReader(csDecrypt); //streamReader에 넣어서
+                plaintext = srDecrypt.ReadToEnd(); //끝까지 읽는다
 
                 if (srDecrypt != null) srDecrypt.Close();
                 if (csDecrypt != null) csDecrypt.Close();
@@ -100,6 +101,64 @@ namespace mook_Rijndael
                 MessageBox.Show("복호화에 장애가 발생하였습니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        //암호화된 txtDialog 컨트롤의 문자열을 저장
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+           if(this.txtPrivateKey.Text == "" || this.txtPrivateKey.Text.Length < 8)
+            {
+                MessageBox.Show("PrivateKey 입력이 올바르지 않습니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.txtPrivateKey.Text = "";
+                this.txtPrivateKey.Focus();
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog() { ValidateNames = true, Filter = "TEXT|*.txt" })
+            {
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    string saveFilePath = sfd.FileName;
+                    StreamWriter sw = new StreamWriter(saveFilePath, false, Encoding.Default);
+                    sw.Write(StringEncrypt()); //암호화된 string을 streamWriter에 넣어서 쓰기
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
+        }
+
+        private string StringEncrypt()
+        {
+            string strkey = this.txtPrivateKey.Text + this.txtPrivateKey.Text + this.txtPrivateKey.Text + this.txtPrivateKey.Text;
+            privateKey = Encoding.ASCII.GetBytes(strkey);
+            //초기화 벡터를 여기서는 동일하게 사용하였지만 실제로는 랜덤하게 사용해야 한다
+            byte[] arrIv = Encoding.ASCII.GetBytes(this.txtPrivateKey.Text + this.txtPrivateKey.Text);
+            Array.Reverse(arrIv);
+            privateIV = arrIv;
+
+            MemoryStream msEncrypt = null;
+            CryptoStream csEncrypt = null;
+            StreamWriter swEncrypt = null;
+            RijndaelManaged aesAlg = null;
+
+            aesAlg = new RijndaelManaged();
+            aesAlg.Key = privateKey;
+            aesAlg.IV = privateIV;
+
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+            msEncrypt = new MemoryStream();
+            csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
+            swEncrypt = new StreamWriter(csEncrypt);
+
+            swEncrypt.Write(this.txtDiary.Text);
+
+            if (swEncrypt != null) swEncrypt.Close();
+            if (csEncrypt != null) csEncrypt.Close();
+            if (msEncrypt != null) msEncrypt.Close();
+            if (aesAlg != null) aesAlg.Clear();
+
+            return Convert.ToBase64String(msEncrypt.ToArray());
         }
     }
 }
