@@ -28,61 +28,70 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnGetFile = new System.Windows.Forms.Button();
+            this.btnDecrypt = new System.Windows.Forms.Button();
+            this.msMenu = new System.Windows.Forms.MenuStrip();
             this.파일ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.publicKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.privateKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.menuStrip1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gbpbData = new System.Windows.Forms.GroupBox();
+            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.grpbResult = new System.Windows.Forms.GroupBox();
+            this.txtDecrypt = new System.Windows.Forms.TextBox();
+            this.sfdFile = new System.Windows.Forms.SaveFileDialog();
+            this.ofdFile = new System.Windows.Forms.OpenFileDialog();
+            this.msMenu.SuspendLayout();
+            this.gbpbData.SuspendLayout();
+            this.grpbResult.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // btnSave
             // 
-            this.button1.Location = new System.Drawing.Point(571, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSave.Location = new System.Drawing.Point(608, 48);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(86, 29);
+            this.btnSave.TabIndex = 0;
+            this.btnSave.Text = "내보내기";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // button2
+            // btnGetFile
             // 
-            this.button2.Location = new System.Drawing.Point(571, 70);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "button1";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnGetFile.Location = new System.Drawing.Point(608, 85);
+            this.btnGetFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnGetFile.Name = "btnGetFile";
+            this.btnGetFile.Size = new System.Drawing.Size(86, 29);
+            this.btnGetFile.TabIndex = 0;
+            this.btnGetFile.Text = "가져오기";
+            this.btnGetFile.UseVisualStyleBackColor = true;
+            this.btnGetFile.Click += new System.EventHandler(this.btnGetFile_Click);
             // 
-            // button3
+            // btnDecrypt
             // 
-            this.button3.Location = new System.Drawing.Point(571, 99);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "button1";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnDecrypt.Location = new System.Drawing.Point(608, 121);
+            this.btnDecrypt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnDecrypt.Name = "btnDecrypt";
+            this.btnDecrypt.Size = new System.Drawing.Size(86, 29);
+            this.btnDecrypt.TabIndex = 0;
+            this.btnDecrypt.Text = "복호화";
+            this.btnDecrypt.UseVisualStyleBackColor = true;
             // 
-            // menuStrip1
+            // msMenu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.msMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.파일ToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(658, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.msMenu.Location = new System.Drawing.Point(0, 0);
+            this.msMenu.Name = "msMenu";
+            this.msMenu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.msMenu.Size = new System.Drawing.Size(712, 28);
+            this.msMenu.TabIndex = 1;
+            this.msMenu.Text = "menuStrip1";
             // 
             // 파일ToolStripMenuItem
             // 
@@ -91,7 +100,7 @@
             this.toolStripSeparator1,
             this.exitXToolStripMenuItem});
             this.파일ToolStripMenuItem.Name = "파일ToolStripMenuItem";
-            this.파일ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.파일ToolStripMenuItem.Size = new System.Drawing.Size(51, 24);
             this.파일ToolStripMenuItem.Text = "파일";
             // 
             // generateKeyToolStripMenuItem
@@ -100,90 +109,107 @@
             this.publicKeyToolStripMenuItem,
             this.privateKeyToolStripMenuItem});
             this.generateKeyToolStripMenuItem.Name = "generateKeyToolStripMenuItem";
-            this.generateKeyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.generateKeyToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.generateKeyToolStripMenuItem.Text = "Generate Key";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // exitXToolStripMenuItem
-            // 
-            this.exitXToolStripMenuItem.Name = "exitXToolStripMenuItem";
-            this.exitXToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitXToolStripMenuItem.Text = "Exit(&X)";
             // 
             // publicKeyToolStripMenuItem
             // 
             this.publicKeyToolStripMenuItem.Name = "publicKeyToolStripMenuItem";
-            this.publicKeyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.publicKeyToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.publicKeyToolStripMenuItem.Text = "Public Key";
+            this.publicKeyToolStripMenuItem.Click += new System.EventHandler(this.publicKeyToolStripMenuItem_Click);
             // 
             // privateKeyToolStripMenuItem
             // 
             this.privateKeyToolStripMenuItem.Name = "privateKeyToolStripMenuItem";
-            this.privateKeyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.privateKeyToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.privateKeyToolStripMenuItem.Text = "Private Key";
+            this.privateKeyToolStripMenuItem.Click += new System.EventHandler(this.privateKeyToolStripMenuItem_Click);
             // 
-            // groupBox1
+            // toolStripSeparator1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 27);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(505, 122);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "메시지";
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
             // 
-            // textBox1
+            // exitXToolStripMenuItem
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 14);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(493, 102);
-            this.textBox1.TabIndex = 0;
+            this.exitXToolStripMenuItem.Name = "exitXToolStripMenuItem";
+            this.exitXToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitXToolStripMenuItem.Text = "Exit(&X)";
+            this.exitXToolStripMenuItem.Click += new System.EventHandler(this.exitXToolStripMenuItem_Click);
             // 
-            // groupBox2
+            // gbpbData
             // 
-            this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 155);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(505, 122);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "메시지";
+            this.gbpbData.Controls.Add(this.txtMessage);
+            this.gbpbData.Location = new System.Drawing.Point(14, 34);
+            this.gbpbData.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbpbData.Name = "gbpbData";
+            this.gbpbData.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbpbData.Size = new System.Drawing.Size(577, 152);
+            this.gbpbData.TabIndex = 2;
+            this.gbpbData.TabStop = false;
+            this.gbpbData.Text = "메시지";
             // 
-            // textBox2
+            // txtMessage
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 14);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(493, 102);
-            this.textBox2.TabIndex = 0;
+            this.txtMessage.Location = new System.Drawing.Point(7, 18);
+            this.txtMessage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.ReadOnly = true;
+            this.txtMessage.Size = new System.Drawing.Size(563, 126);
+            this.txtMessage.TabIndex = 0;
+            // 
+            // grpbResult
+            // 
+            this.grpbResult.Controls.Add(this.txtDecrypt);
+            this.grpbResult.Location = new System.Drawing.Point(14, 194);
+            this.grpbResult.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.grpbResult.Name = "grpbResult";
+            this.grpbResult.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.grpbResult.Size = new System.Drawing.Size(577, 152);
+            this.grpbResult.TabIndex = 2;
+            this.grpbResult.TabStop = false;
+            this.grpbResult.Text = "메시지";
+            // 
+            // txtDecrypt
+            // 
+            this.txtDecrypt.Location = new System.Drawing.Point(7, 18);
+            this.txtDecrypt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtDecrypt.Multiline = true;
+            this.txtDecrypt.Name = "txtDecrypt";
+            this.txtDecrypt.ReadOnly = true;
+            this.txtDecrypt.Size = new System.Drawing.Size(563, 126);
+            this.txtDecrypt.TabIndex = 0;
+            // 
+            // ofdFile
+            // 
+            this.ofdFile.FileName = "openFileDialog1";
+            this.ofdFile.Filter = "Public Key Document(*.pke)|*.pke";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 415);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.ClientSize = new System.Drawing.Size(712, 355);
+            this.Controls.Add(this.grpbResult);
+            this.Controls.Add(this.gbpbData);
+            this.Controls.Add(this.btnDecrypt);
+            this.Controls.Add(this.btnGetFile);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.msMenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.msMenu;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.Text = "RSA Server";
+            this.msMenu.ResumeLayout(false);
+            this.msMenu.PerformLayout();
+            this.gbpbData.ResumeLayout(false);
+            this.gbpbData.PerformLayout();
+            this.grpbResult.ResumeLayout(false);
+            this.grpbResult.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,20 +217,22 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnGetFile;
+        private System.Windows.Forms.Button btnDecrypt;
+        private System.Windows.Forms.MenuStrip msMenu;
         private System.Windows.Forms.ToolStripMenuItem 파일ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateKeyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem publicKeyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem privateKeyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitXToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.GroupBox gbpbData;
+        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.GroupBox grpbResult;
+        private System.Windows.Forms.TextBox txtDecrypt;
+        private System.Windows.Forms.SaveFileDialog sfdFile;
+        private System.Windows.Forms.OpenFileDialog ofdFile;
     }
 }
 
