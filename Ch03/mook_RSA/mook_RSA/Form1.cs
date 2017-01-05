@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 /*
@@ -176,9 +177,52 @@ namespace mook_RSA
             {
                 try
                 {
-                    StreamReader
+                    StreamReader streamReader = new StreamReader(this.ofdFile.FileName);
+                    this.txtMessage.Text = streamReader.ReadToEnd();
+                    streamReader.Close();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        //[복호화] : RSA 암호화 알고리즘으로 암호화된 문자열 복호화
+        private void btnDecrypt_Click(object sender, EventArgs e)
+        {
+            string fileString = null;
+            ofdFile.Filter = "Private Keys Document(*.kez)|*.kez";
+            if(this.ofdFile.ShowDialog() == DialogResult.OK)
+            {
+                StreamReader sr = new StreamReader(this.ofdFile.FileName, true);
+                fileString = sr.ReadToEnd();
+                sr.Close();
+            }
+
+            if(fileString != null)
+            {
+                UpdateTextDelegate updateTextDelegate = new UpdateTextDelegate(UpdateText); //복호화된 데이터를 txtDecrypt 컨트롤에 저장
+                int bitNum = 1024;
+
+                try
+                {
+                    DecryptionThread decThread = new DecryptionThread();
+                    Thread decryptThread = new Thread(decThread.Decrypt); //객체를 만들고 그 객체의 메소드를 스레드로 돌린다
+                    decryptThread.IsBackground = true; //스레드를 백그라운드 스레드로 만들면 종료를 막지 않는 특징이 있다
+                    decryptThread.Start(new object[] { this, updateTextDelegate, this.txtMessage.Text, bitNum, fileString });
+                                                      //매개변수를 하나 밖에 못 넣으니 object 배열로 하여 여러개를 담아서 하나를 넘기고 받는 쪽에서 형변환하여 사용
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("에러 발생 : " + ex.Message);
+                }
+            }
+        }
+
+        private void UpdateText(string inputText)
+        {
+            this.txtDecrypt.Text = inputText;
         }
     }
 }
