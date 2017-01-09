@@ -65,9 +65,10 @@ namespace mook_RSAUser
                     EncryptionThread encThread = new EncryptionThread();
                     Thread encryptThread = new Thread(encThread.Encrypt);
                     encryptThread.IsBackground = true;
-                    encThread.Start(new Object[] { this, updateTextDelegate, this.txtMessage.Text, bitNum, fileString });
+                    encryptThread.Start(new Object[] { this, updateTextDelegate, this.txtMessage.Text, bitNum, fileString });
+                    //encryptThread.Start(new Object[] { this, updateTextDelegate, this.txtMessage.Text, bitNum, fileString });
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("에러발생 : " + ex.Message);
                 }
