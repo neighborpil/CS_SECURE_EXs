@@ -52,6 +52,14 @@ exitXToolStripMenuItem_Click(object sender, EventArgs e) : [Exit] 메뉴 클릭,
  - 특정 멤버에 NonSerializedAttribute를 적용해 주면 해당 멤버는 직렬하가 불가능
  - 직렬화를 원하지 않는 멤버에 적용할 용도의 속성
  - 직렬화가 불가능한 멤버에는 반드시 이 속성 적용
+
+#실행방법
+ 1. RSA Server는로 공개키와 비밀키 생성
+ 2. RSA Server는에서 [내보내기] 버튼 눌러 생성한 공개키를 RSA User에 전달
+ 3. RSA User는 RSA Server는에서 전달된 공개키를 이용화여 [복호화] 버튼을 눌러 암호화
+ 4. RSA User는 [내보내기] 버튼 눌러 암호화된 데이터를 Text 파일로 RSA에 전달
+ 5. RSA Server는 [가져오기] 버튼을 눌러 RSA User에서 전달된 암호화된 텍스트 파일을 로드
+ 6. RSA Server는 [복호화] 버튼을 눌러 암호화된 문자열을 복호화
 */
 
 //RSA 서버

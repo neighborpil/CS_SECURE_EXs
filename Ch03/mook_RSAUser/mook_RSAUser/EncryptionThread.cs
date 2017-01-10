@@ -49,10 +49,12 @@ namespace mook_RSAUser
             #endregion
 
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < iterations; i++)
+
+            #region 암호화가 이루어지는 부분
+            for (int i = 0; i <= iterations; i++)
             {
-                byte[] tempBytes = new byte[(dataLength - maxLength * i > maxLength) ? maxLength : dataLength - maxLength * i];
-                Buffer.BlockCopy(bytes, maxLength * i, tempBytes, 0, tempBytes.Length);
+                byte[] tempBytes = new byte[(dataLength - maxLength * i > maxLength) ? maxLength : dataLength - maxLength * i]; //블록 사이즈에 따라 바이트 배열 tempBytes의 사이즈 선언
+                Buffer.BlockCopy(bytes, maxLength * i, tempBytes, 0, tempBytes.Length); //지정된 바이트 배열에서 대상 배열로 지정된 바이트 수를 복사
                 #region Buffer.BlockCopy()
                 /*
                 #Buffer.BlockCopy(src, srcOffset, dst, dstOffset, count)
@@ -64,10 +66,12 @@ namespace mook_RSAUser
                  - count : 복사할 바이트 수
                 */
                 #endregion
-                byte[] encryptedBytes = rsaCryptoServiceProvider.Encrypt(tempBytes, true);
+                byte[] encryptedBytes = rsaCryptoServiceProvider.Encrypt(tempBytes, true); //암호화할 데이터 및 패팅 분류를 지정하고 RSA 알고리즘을 사용하여 암호화
+                                                //바이트의 길이가 86에서 128로 길어진다. 이는 암호화 하면서 매개변수로 지정된 패팅을 사용하여 RSA암호화가 수행되어 질때 길이가 증가
                 Array.Reverse(encryptedBytes);
-                stringBuilder.Append(Convert.ToBase64String(encryptedBytes));
-            }
+                stringBuilder.Append(Convert.ToBase64String(encryptedBytes)); //암호화된 바이트 배열을 8비트의 부호 없는 정수로 구성된 배열의 값인 base64로 인코딩 
+            }                                   //이를 StringBuilder에 추가, base64로 변환 할 때 길이가 최종적으로 128에서 172로 길어진다
+            #endregion
             return stringBuilder.ToString();
         }
     }
