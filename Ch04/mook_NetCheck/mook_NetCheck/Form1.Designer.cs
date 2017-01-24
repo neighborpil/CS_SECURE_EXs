@@ -47,6 +47,7 @@
             this.lbAddress.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbAddress.Size = new System.Drawing.Size(213, 316);
             this.lbAddress.TabIndex = 0;
+            this.lbAddress.SelectedIndexChanged += new System.EventHandler(this.lbAddress_SelectedIndexChanged);
             // 
             // lbResult
             // 
@@ -72,6 +73,7 @@
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "입력";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // cbTime
             // 
@@ -86,6 +88,7 @@
             this.cbTime.Name = "cbTime";
             this.cbTime.Size = new System.Drawing.Size(121, 20);
             this.cbTime.TabIndex = 3;
+            this.cbTime.SelectedIndexChanged += new System.EventHandler(this.cbTime_SelectedIndexChanged);
             // 
             // btnCheck
             // 
@@ -95,10 +98,12 @@
             this.btnCheck.TabIndex = 2;
             this.btnCheck.Text = "체크";
             this.btnCheck.UseVisualStyleBackColor = true;
+            this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
             // Timer
             // 
             this.Timer.Interval = 1000;
+            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // Form1
             // 
@@ -115,6 +120,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "포트 스캐너";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
