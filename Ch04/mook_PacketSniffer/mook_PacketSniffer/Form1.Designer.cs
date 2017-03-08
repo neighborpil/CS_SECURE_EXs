@@ -29,14 +29,20 @@
         private void InitializeComponent()
         {
             this.tsMenu = new System.Windows.Forms.ToolStrip();
-            this.lvReceivedPackets = new System.Windows.Forms.ListView();
-            this.tvPacketDetail = new System.Windows.Forms.TreeView();
             this.tsbtnStart = new System.Windows.Forms.ToolStripButton();
             this.tsbtnStop = new System.Windows.Forms.ToolStripButton();
             this.tslblIp = new System.Windows.Forms.ToolStripLabel();
             this.tscbIp = new System.Windows.Forms.ToolStripComboBox();
             this.tslblNum = new System.Windows.Forms.ToolStripLabel();
             this.tscbNum = new System.Windows.Forms.ToolStripComboBox();
+            this.lvReceivedPackets = new System.Windows.Forms.ListView();
+            this.tvPacketDetail = new System.Windows.Forms.TreeView();
+            this.chNo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chDest = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chPack = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tsMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,26 +60,6 @@
             this.tsMenu.Size = new System.Drawing.Size(810, 25);
             this.tsMenu.TabIndex = 0;
             this.tsMenu.Text = "toolStrip1";
-            // 
-            // lvReceivedPackets
-            // 
-            this.lvReceivedPackets.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lvReceivedPackets.FullRowSelect = true;
-            this.lvReceivedPackets.GridLines = true;
-            this.lvReceivedPackets.Location = new System.Drawing.Point(0, 25);
-            this.lvReceivedPackets.Name = "lvReceivedPackets";
-            this.lvReceivedPackets.Size = new System.Drawing.Size(810, 97);
-            this.lvReceivedPackets.TabIndex = 1;
-            this.lvReceivedPackets.UseCompatibleStateImageBehavior = false;
-            this.lvReceivedPackets.View = System.Windows.Forms.View.Details;
-            // 
-            // tvPacketDetail
-            // 
-            this.tvPacketDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvPacketDetail.Location = new System.Drawing.Point(0, 122);
-            this.tvPacketDetail.Name = "tvPacketDetail";
-            this.tvPacketDetail.Size = new System.Drawing.Size(810, 389);
-            this.tvPacketDetail.TabIndex = 2;
             // 
             // tsbtnStart
             // 
@@ -123,6 +109,68 @@
             this.tscbNum.Name = "tscbNum";
             this.tscbNum.Size = new System.Drawing.Size(121, 25);
             // 
+            // lvReceivedPackets
+            // 
+            this.lvReceivedPackets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chNo,
+            this.chTime,
+            this.chSource,
+            this.chDest,
+            this.chProtocol,
+            this.chPack});
+            this.lvReceivedPackets.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lvReceivedPackets.FullRowSelect = true;
+            this.lvReceivedPackets.GridLines = true;
+            this.lvReceivedPackets.Location = new System.Drawing.Point(0, 25);
+            this.lvReceivedPackets.Name = "lvReceivedPackets";
+            this.lvReceivedPackets.Size = new System.Drawing.Size(810, 97);
+            this.lvReceivedPackets.TabIndex = 1;
+            this.lvReceivedPackets.UseCompatibleStateImageBehavior = false;
+            this.lvReceivedPackets.View = System.Windows.Forms.View.Details;
+            // 
+            // tvPacketDetail
+            // 
+            this.tvPacketDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvPacketDetail.Location = new System.Drawing.Point(0, 122);
+            this.tvPacketDetail.Name = "tvPacketDetail";
+            this.tvPacketDetail.Size = new System.Drawing.Size(810, 389);
+            this.tvPacketDetail.TabIndex = 2;
+            // 
+            // chNo
+            // 
+            this.chNo.Text = "No.";
+            this.chNo.Width = 70;
+            // 
+            // chTime
+            // 
+            this.chTime.Text = "Time";
+            this.chTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chTime.Width = 180;
+            // 
+            // chSource
+            // 
+            this.chSource.Text = "Source";
+            this.chSource.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chSource.Width = 150;
+            // 
+            // chDest
+            // 
+            this.chDest.Text = "Destination";
+            this.chDest.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chDest.Width = 150;
+            // 
+            // chProtocol
+            // 
+            this.chProtocol.Text = "Protocol";
+            this.chProtocol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chProtocol.Width = 100;
+            // 
+            // chPack
+            // 
+            this.chPack.Text = "Packet Size";
+            this.chPack.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chPack.Width = 100;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -133,6 +181,7 @@
             this.Controls.Add(this.tsMenu);
             this.Name = "Form1";
             this.Text = "PacketSniffer";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tsMenu.ResumeLayout(false);
             this.tsMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -151,6 +200,12 @@
         private System.Windows.Forms.ToolStripComboBox tscbIp;
         private System.Windows.Forms.ToolStripLabel tslblNum;
         private System.Windows.Forms.ToolStripComboBox tscbNum;
+        private System.Windows.Forms.ColumnHeader chNo;
+        private System.Windows.Forms.ColumnHeader chTime;
+        private System.Windows.Forms.ColumnHeader chSource;
+        private System.Windows.Forms.ColumnHeader chDest;
+        private System.Windows.Forms.ColumnHeader chProtocol;
+        private System.Windows.Forms.ColumnHeader chPack;
     }
 }
 
