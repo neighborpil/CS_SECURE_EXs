@@ -36,13 +36,13 @@
             this.tslblNum = new System.Windows.Forms.ToolStripLabel();
             this.tscbNum = new System.Windows.Forms.ToolStripComboBox();
             this.lvReceivedPackets = new System.Windows.Forms.ListView();
-            this.tvPacketDetail = new System.Windows.Forms.TreeView();
             this.chNo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chDest = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chPack = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tvPacketDetail = new System.Windows.Forms.TreeView();
             this.tsMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +69,7 @@
             this.tsbtnStart.Name = "tsbtnStart";
             this.tsbtnStart.Size = new System.Drawing.Size(23, 22);
             this.tsbtnStart.Text = "Start";
+            this.tsbtnStart.Click += new System.EventHandler(this.tsbtnStart_Click);
             // 
             // tsbtnStop
             // 
@@ -79,6 +80,7 @@
             this.tsbtnStop.Name = "tsbtnStop";
             this.tsbtnStop.Size = new System.Drawing.Size(23, 22);
             this.tsbtnStop.Text = "Stop";
+            this.tsbtnStop.Click += new System.EventHandler(this.tsbtnStop_Click);
             // 
             // tslblIp
             // 
@@ -127,14 +129,7 @@
             this.lvReceivedPackets.TabIndex = 1;
             this.lvReceivedPackets.UseCompatibleStateImageBehavior = false;
             this.lvReceivedPackets.View = System.Windows.Forms.View.Details;
-            // 
-            // tvPacketDetail
-            // 
-            this.tvPacketDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvPacketDetail.Location = new System.Drawing.Point(0, 122);
-            this.tvPacketDetail.Name = "tvPacketDetail";
-            this.tvPacketDetail.Size = new System.Drawing.Size(810, 389);
-            this.tvPacketDetail.TabIndex = 2;
+            this.lvReceivedPackets.Click += new System.EventHandler(this.lvReceivedPackets_Click);
             // 
             // chNo
             // 
@@ -170,6 +165,14 @@
             this.chPack.Text = "Packet Size";
             this.chPack.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.chPack.Width = 100;
+            // 
+            // tvPacketDetail
+            // 
+            this.tvPacketDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvPacketDetail.Location = new System.Drawing.Point(0, 122);
+            this.tvPacketDetail.Name = "tvPacketDetail";
+            this.tvPacketDetail.Size = new System.Drawing.Size(810, 389);
+            this.tvPacketDetail.TabIndex = 2;
             // 
             // Form1
             // 
