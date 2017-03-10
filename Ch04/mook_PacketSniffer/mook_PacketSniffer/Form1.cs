@@ -96,14 +96,65 @@ namespace mook_PacketSniffer
                     byte[] byOut = new byte[4] { 1, 0, 0, 0 };
 
                     mainSocket.IOControl(IOControlCode.ReceiveAll, byTrue, byOut);
+                    /*
+                    #Socket.IOControl
+                     - IOControlCode열거형으로 컨트롤 코드를 지정하여 소켓의 하위 패킷을 제어하기 위하여 운영 모드 설정
+                     - 매개변수
+                       1. IOControlCode : 수행할 작업의 컨트롤 코드를 지정하는 IOControlCode값
+                          - ReceiveAll : 모든 IPv4 패킷을 받는다
+                       2. optionValue : 해당 작업에 필요한 입력 데이터를 포함하는 Byte형식의 배열
+                       3. optionOutValue : 해당 작업에서 반환된 출력 데이터를 포함하는 Byte형식 배열
+                    */
 
                     mainSocket.BeginReceive(byteData, 0, byteData.Length, SocketFlags.None, new AsyncCallback(OnReceive), null);
+                        //BeginReceive()메서드로 소켓에서 데이터를 비동기적으로 받는다, 들어오면 비동기적으로 OnReceive메소드 호출
                 }
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        
+        /// <summary>
+        /// Socket에 비동기적으로 데이터가 수신 되었을 때 호출되는 메소드
+        /// ParseDat()메서드를 호출하여 패킷을 분석
+        /// </summary>
+        /// <param name="ar"></param>
+        private void OnReceive(IAsyncResult ar)
+        {
+            try
+            {
+                int nReceived = mainSocket.EndReceive(ar); //비동기 작업에 대한 상태 정보 및 사용자 정의 데이터를 저장한 개체를 매개변수를 선언하여
+                    //비동기 읽기 작업을 완료하고 바이트 수를 변수에 저장
+                    //Socket을 가져온 다음 EndReceive()메서드를 호출하여 성공적으로 읽기 작업을 마친 후 읽은 바이트수를 반환
+                ParseData(byteData, nReceived); // Socket에 있는 데이터를 분석하는 작업을 수행, 
+                            //매개변수에 비동기로 받은 바이트 배열(byteDat), 바이트 수(nReceived)를 지정
+
+                if (bContinueCapturing)
+                {
+                    byteData = new byte[4096];
+                    mainSocket.BeginReceive(byteData, 0, byteData.Length, SocketFlags.None, new AsyncCallback(OnReceive), null);
+                }
+            }
+            catch (ObjectDisposedException) { }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "알림", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 비동기로 받은 데이터를 분석
+        /// </summary>
+        private void ParseData(byte[] byteData, int nReceived)
+        {
+            if(PacketNum == Convert.ToInt32(this.tscbNum.Text))
+            {
+                PacketNum = 1;
+                this.lvReceivedPackets.Items.Clear();
+            }
+            IPHeader ipHeader = new IPHeader(byteData, nReceived);
         }
 
         private void tsbtnStop_Click(object sender, EventArgs e)
