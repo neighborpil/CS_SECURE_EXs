@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-<<<<<<< HEAD
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mook_PacketSniffer", "mook_PacketSniffer\mook_PacketSniffer.csproj", "{3F647D72-6268-4F7D-86D8-789B09D669C4}"
-=======
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mook_PacketSniffer", "mook_PacketSniffer\mook_PacketSniffer.csproj", "{E9BA5FE2-FA60-4FD4-B180-857EEEBC8038}"
->>>>>>> origin/ModifyBranch
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mook_PacketSniffer", "mook_PacketSniffer\mook_PacketSniffer.csproj", "{C484C4E2-1A63-4D3D-AD09-6EBA544BDC75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,17 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-		{3F647D72-6268-4F7D-86D8-789B09D669C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F647D72-6268-4F7D-86D8-789B09D669C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F647D72-6268-4F7D-86D8-789B09D669C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F647D72-6268-4F7D-86D8-789B09D669C4}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{E9BA5FE2-FA60-4FD4-B180-857EEEBC8038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9BA5FE2-FA60-4FD4-B180-857EEEBC8038}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9BA5FE2-FA60-4FD4-B180-857EEEBC8038}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9BA5FE2-FA60-4FD4-B180-857EEEBC8038}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> origin/ModifyBranch
+		{C484C4E2-1A63-4D3D-AD09-6EBA544BDC75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C484C4E2-1A63-4D3D-AD09-6EBA544BDC75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C484C4E2-1A63-4D3D-AD09-6EBA544BDC75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C484C4E2-1A63-4D3D-AD09-6EBA544BDC75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
