@@ -29,27 +29,27 @@
         private void InitializeComponent()
         {
             this.tsMenu = new System.Windows.Forms.ToolStrip();
-            this.lvReceivedPackets = new System.Windows.Forms.ListView();
-            this.tvPacketDetail = new System.Windows.Forms.TreeView();
+            this.tsbtnStart = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnStop = new System.Windows.Forms.ToolStripButton();
             this.tslblIp = new System.Windows.Forms.ToolStripLabel();
             this.tscbIp = new System.Windows.Forms.ToolStripComboBox();
             this.tslblNum = new System.Windows.Forms.ToolStripLabel();
             this.tscbNum = new System.Windows.Forms.ToolStripComboBox();
+            this.lvReceivedPackets = new System.Windows.Forms.ListView();
             this.chNo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chDest = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chProtocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chPack = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tsbtnStar = new System.Windows.Forms.ToolStripButton();
-            this.tsbtnStop = new System.Windows.Forms.ToolStripButton();
+            this.tvPacketDetail = new System.Windows.Forms.TreeView();
             this.tsMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tsMenu
             // 
             this.tsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbtnStar,
+            this.tsbtnStart,
             this.tsbtnStop,
             this.tslblIp,
             this.tscbIp,
@@ -61,32 +61,25 @@
             this.tsMenu.TabIndex = 0;
             this.tsMenu.Text = "toolStrip1";
             // 
-            // lvReceivedPackets
+            // tsbtnStart
             // 
-            this.lvReceivedPackets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chNo,
-            this.chTime,
-            this.chSource,
-            this.chDest,
-            this.chProtocol,
-            this.chPack});
-            this.lvReceivedPackets.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lvReceivedPackets.FullRowSelect = true;
-            this.lvReceivedPackets.GridLines = true;
-            this.lvReceivedPackets.Location = new System.Drawing.Point(0, 25);
-            this.lvReceivedPackets.Name = "lvReceivedPackets";
-            this.lvReceivedPackets.Size = new System.Drawing.Size(755, 97);
-            this.lvReceivedPackets.TabIndex = 1;
-            this.lvReceivedPackets.UseCompatibleStateImageBehavior = false;
-            this.lvReceivedPackets.View = System.Windows.Forms.View.Details;
+            this.tsbtnStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnStart.Image = global::mook_PacketSniffer.Properties.Resources.play_on;
+            this.tsbtnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnStart.Name = "tsbtnStart";
+            this.tsbtnStart.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnStart.Text = "Start";
+            this.tsbtnStart.Click += new System.EventHandler(this.tsbtnStart_Click);
             // 
-            // tvPacketDetail
+            // tsbtnStop
             // 
-            this.tvPacketDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvPacketDetail.Location = new System.Drawing.Point(0, 122);
-            this.tvPacketDetail.Name = "tvPacketDetail";
-            this.tvPacketDetail.Size = new System.Drawing.Size(755, 464);
-            this.tvPacketDetail.TabIndex = 2;
+            this.tsbtnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnStop.Enabled = false;
+            this.tsbtnStop.Image = global::mook_PacketSniffer.Properties.Resources.stop;
+            this.tsbtnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnStop.Name = "tsbtnStop";
+            this.tsbtnStop.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnStop.Text = "Stop";
             // 
             // tslblIp
             // 
@@ -116,6 +109,25 @@
             "1000"});
             this.tscbNum.Name = "tscbNum";
             this.tscbNum.Size = new System.Drawing.Size(121, 25);
+            // 
+            // lvReceivedPackets
+            // 
+            this.lvReceivedPackets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chNo,
+            this.chTime,
+            this.chSource,
+            this.chDest,
+            this.chProtocol,
+            this.chPack});
+            this.lvReceivedPackets.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lvReceivedPackets.FullRowSelect = true;
+            this.lvReceivedPackets.GridLines = true;
+            this.lvReceivedPackets.Location = new System.Drawing.Point(0, 25);
+            this.lvReceivedPackets.Name = "lvReceivedPackets";
+            this.lvReceivedPackets.Size = new System.Drawing.Size(755, 97);
+            this.lvReceivedPackets.TabIndex = 1;
+            this.lvReceivedPackets.UseCompatibleStateImageBehavior = false;
+            this.lvReceivedPackets.View = System.Windows.Forms.View.Details;
             // 
             // chNo
             // 
@@ -147,24 +159,13 @@
             this.chPack.Text = "Package Size";
             this.chPack.Width = 100;
             // 
-            // tsbtnStar
+            // tvPacketDetail
             // 
-            this.tsbtnStar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnStar.Image = global::mook_PacketSniffer.Properties.Resources.play_on;
-            this.tsbtnStar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnStar.Name = "tsbtnStar";
-            this.tsbtnStar.Size = new System.Drawing.Size(23, 22);
-            this.tsbtnStar.Text = "Start";
-            // 
-            // tsbtnStop
-            // 
-            this.tsbtnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbtnStop.Enabled = false;
-            this.tsbtnStop.Image = global::mook_PacketSniffer.Properties.Resources.stop;
-            this.tsbtnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnStop.Name = "tsbtnStop";
-            this.tsbtnStop.Size = new System.Drawing.Size(23, 22);
-            this.tsbtnStop.Text = "Stop";
+            this.tvPacketDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvPacketDetail.Location = new System.Drawing.Point(0, 122);
+            this.tvPacketDetail.Name = "tvPacketDetail";
+            this.tvPacketDetail.Size = new System.Drawing.Size(755, 464);
+            this.tvPacketDetail.TabIndex = 2;
             // 
             // Form1
             // 
@@ -176,6 +177,7 @@
             this.Controls.Add(this.tsMenu);
             this.Name = "Form1";
             this.Text = "PacketSniffer";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tsMenu.ResumeLayout(false);
             this.tsMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -188,7 +190,7 @@
         private System.Windows.Forms.ToolStrip tsMenu;
         private System.Windows.Forms.ListView lvReceivedPackets;
         private System.Windows.Forms.TreeView tvPacketDetail;
-        private System.Windows.Forms.ToolStripButton tsbtnStar;
+        private System.Windows.Forms.ToolStripButton tsbtnStart;
         private System.Windows.Forms.ToolStripButton tsbtnStop;
         private System.Windows.Forms.ToolStripLabel tslblIp;
         private System.Windows.Forms.ToolStripComboBox tscbIp;
